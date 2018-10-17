@@ -18,7 +18,7 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 
 ## Initialize master
-if [$1 == "master"]
+if [ "$1" == "master" ]
 then
    sudo kubeadm init
 fi
