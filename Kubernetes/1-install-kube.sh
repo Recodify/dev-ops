@@ -1,8 +1,5 @@
 #!/bin/bash
 
-## Switch to user
-su - kubeadmin
-
 ## Allow https in apt repository sources
 sudo apt-get update 
 sudo apt-get install -y apt-transport-https
