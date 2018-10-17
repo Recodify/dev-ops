@@ -1,8 +1,5 @@
 #!/bin/bash
 
-## Switch to user
-su - kubeadmin
-
 ## Allow https in apt repository sources
 sudo apt-get update 
 sudo apt-get install -y apt-transport-https
@@ -21,7 +18,10 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 
 ## Initialize master
-sudo kubeadm init
+if [$1 == "master"]
+then
+   sudo kubeadm init
+fi
 
 ## Setup kubectl with a config
 mkdir -p $HOME/.kube
@@ -29,7 +29,6 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 cp -r /root/.ssh /home/kubeadmin/.ssh
 chown -R kubeadmin:kubeadmin /home/kubeadmin
-
 
 ## Deploy pod network
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
