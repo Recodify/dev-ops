@@ -14,7 +14,8 @@ echo "kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 su - kubeadmin
 
 ## Allow https in apt repository sources
-sudo apt-get update && apt-get install -y apt-transport-https
+sudo apt-get update 
+sudo apt-get install -y apt-transport-https
 
 ## Install Docker
 sudo apt install docker.io
@@ -22,12 +23,12 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 ## Install kubernetes install key
-sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add 
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | nano kubernetes.list
+sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add 
+echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list > /dev/null
 
 ## Install kubernetes
-apt-get update
-apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 
 ## Initialize master
 sudo kubeadm init
